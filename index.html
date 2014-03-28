@@ -131,7 +131,12 @@
             left();
             down();
         }
-        if(document.querySelectorAll('.tile:not(.tile-merged) .tile-inner').length == 15) {
+        var count = {};
+        var tiles = Array.prototype.slice.call(document.querySelectorAll('.tile'));
+        tiles.filter(function(el) {
+	  count[el.className.match(/tile-position-([0-9]\-[0-9])/)[1]] = true;
+	})
+        if(Object.keys(tiles).length == 14) {
 	    	s.innerHTML = 'autoplay';
 	    	pause = true;
 	    	return;
