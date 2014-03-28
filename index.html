@@ -70,12 +70,13 @@
     </div>
 
     <p class="game-explanation">
+      <strong>2048 : Modified with autoplay by SchizoDuckie</strong><br/>
+      Autoplay stops at 14 tiles on screen so that you have a chance to fix the rest of the game yourself.
+      <p>Ceci n'est pas une A.I.!</p>
+      <p>This is just a script that automatically sends 'down', 'right' keys to the screen until the board is locked in place. After that, it presses 'left', 'down', and switches back to 'down','right'.</p>
       <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
     </p>
     <hr>
-    <p>
-    <strong class="important">Note:</strong> This site is the official version of 2048. You can play it on your phone via <a href="http://git.io/2048">http://git.io/2048.</a> All other apps or sites are derivatives or fakes, and should be used with caution.
-    </p>
     <hr>
     <p>
     Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
@@ -101,7 +102,7 @@
   function right() { fireKey(39); }
   function up() { fireKey(38); }
   
-  var pause = false, gameTarget = document.querySelector('.game-container');
+  var pause = false, gameTarget = document.querySelector('.game-container'), s = ce('span');
 
   function createButton() {
     var d = ce('button');
@@ -118,7 +119,6 @@
         }
         autoPlayUntilLocked();
     }
-    var s = ce('span');
     s.innerHTML = 'autoplay';
     d.appendChild(s);
     ac(d);
@@ -134,6 +134,16 @@
             left();
             down();
         }
+        var count = {};
+        var tiles = Array.prototype.slice.call(document.querySelectorAll('.tile'));
+        tiles.filter(function(el) {
+	  count[el.className.match(/tile-position-([0-9]\-[0-9])/)[1]] = true;
+	})
+        if(Object.keys(count).length >= 14) {
+	    	s.innerHTML = 'autoplay';
+	    	pause = true;
+	    	return;
+	}
         setTimeout(autoPlayUntilLocked(1000));
     }, 200);
   }
@@ -141,7 +151,7 @@
   function getBoardState() {
     return Array.prototype.slice.call(document.querySelectorAll('.tile-inner')).map(function(el) {
         return el.innerHTML;
-    }).join('');
+    }).join('|');
   }
 
   function fireKey(keyCode) {
@@ -154,6 +164,16 @@
   }
 
   createButton();	
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49482098-1', 'schizoduckie.github.io');
+  ga('send', 'pageview');
+
 </script>
 </body>
 </html>
