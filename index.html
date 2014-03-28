@@ -123,11 +123,6 @@
 
   function autoPlayUntilLocked() {
     if (pause) return;
-    if(getBoardState().split('|').length == 14) {
-    	s.innerHTML = 'autoplay';
-    	pause = true;
-    	return;
-    }
     var lastState = getBoardState();
     down();
     right();
@@ -136,6 +131,11 @@
             left();
             down();
         }
+        if(getBoardState().split('|').length == 14) {
+	    	s.innerHTML = 'autoplay';
+	    	pause = true;
+	    	return;
+	}
         setTimeout(autoPlayUntilLocked(1000));
     }, 200);
   }
