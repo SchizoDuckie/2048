@@ -131,7 +131,7 @@
             left();
             down();
         }
-        if(getBoardState().split('|').length == 14) {
+        if(document.querySelectorAll('.tile:not(.tile-merged) .tile-inner').length == 14) {
 	    	s.innerHTML = 'autoplay';
 	    	pause = true;
 	    	return;
