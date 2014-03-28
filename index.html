@@ -92,5 +92,68 @@
   <script src="js/local_storage_manager.js"></script>
   <script src="js/game_manager.js"></script>
   <script src="js/application.js"></script>
+  <script type="text/javascript">
+  	
+  function ce(el) { return document.createElement(el); };
+  function ac(el) { document.body.appendChild(el); return el; };
+  function down() { fireKey(40); }
+  function left() { fireKey(37); }
+  function right() { fireKey(39); }
+  function up() { fireKey(38); }
+  
+  var pause = false, gameTarget = document.querySelector('.game-container');
+
+  function createButton() {
+    var d = ce('button');
+    d.style.position = 'fixed';
+    d.style.top = '15px';
+    d.style.left = '15px';
+    d.onclick = function() {
+        if (s.innerHTML == 'autoplay') {
+            s.innerHTML = 'pause';
+            autoPlayUntilLocked();
+            pause = false;
+        } else {
+            s.innerHTML = 'autoplay';
+            pause = true;
+        }
+    }
+    var s = ce('span');
+    s.innerHTML = 'autoplay';
+    d.appendChild(s);
+    ac(d);
+  }
+
+  function autoPlayUntilLocked() {
+    if (pause) return;
+    var lastState = getBoardState();
+    down();
+    right();
+    setTimeout(function() {
+        if (getBoardState() == lastState) {
+            left();
+            down();
+        }
+        setTimeout(autoPlayUntilLocked(1000));
+    }, 200);
+  }
+
+  function getBoardState() {
+    return Array.prototype.slice.call(document.querySelectorAll('.tile-inner')).map(function(el) {
+        return el.innerHTML;
+    }).join('');
+  }
+
+  function fireKey(keyCode) {
+    var eventObj = document.createEventObject ? document.createEventObject() : document.createEvent("Events");
+    if (eventObj.initEvent) {
+        eventObj.initEvent("keydown", true, true);
+    }
+    eventObj.keyCode = eventObj.which = keyCode;
+    document.dispatchEvent ? gameTarget.dispatchEvent(eventObj) : gameTarget.fireEvent("onkeydown", eventObj);
+  }
+
+  createButton();	
+</script>
 </body>
 </html>
