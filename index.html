@@ -71,6 +71,8 @@
 
     <p class="game-explanation">
       <strong>2048 : Modified with autoplay by SchizoDuckie</strong><br/>
+      Autoplay stops at 14 tiles on screen so that you have a chance to fix the rest of the game yourself.
+      <p>Ceci n'est pas une A.I.!</p>
       <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
     </p>
     <hr>
@@ -136,7 +138,7 @@
         tiles.filter(function(el) {
 	  count[el.className.match(/tile-position-([0-9]\-[0-9])/)[1]] = true;
 	})
-        if(Object.keys(count).length == 14) {
+        if(Object.keys(count).length >= 14) {
 	    	s.innerHTML = 'autoplay';
 	    	pause = true;
 	    	return;
