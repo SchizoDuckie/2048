@@ -111,12 +111,12 @@
     d.onclick = function() {
         if (s.innerHTML == 'autoplay') {
             s.innerHTML = 'pause';
-            autoPlayUntilLocked();
             pause = false;
         } else {
             s.innerHTML = 'autoplay';
             pause = true;
         }
+        autoPlayUntilLocked();
     }
     var s = ce('span');
     s.innerHTML = 'autoplay';
