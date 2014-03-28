@@ -99,7 +99,7 @@
   function right() { fireKey(39); }
   function up() { fireKey(38); }
   
-  var pause = false, gameTarget = document.querySelector('.game-container');
+  var pause = false, gameTarget = document.querySelector('.game-container'), s = ce('span');
 
   function createButton() {
     var d = ce('button');
@@ -116,7 +116,6 @@
         }
         autoPlayUntilLocked();
     }
-    var s = ce('span');
     s.innerHTML = 'autoplay';
     d.appendChild(s);
     ac(d);
